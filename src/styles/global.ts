@@ -1,5 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 import { theme } from "./theme";
+import yellowBlob from '../assets/bg-yellow-blob.svg';
+import blueBlob from '../assets/bg-blue-blob.svg';
+
 
 const GlobalStyles = createGlobalStyle`
     /* RESET STYLES */
@@ -126,8 +129,14 @@ const GlobalStyles = createGlobalStyle`
         font-style: normal;
         font-weight: ${theme.fontWeights.regular};
         color: ${theme.colors.primaryText};
-        background-color: ${theme.colors.bgColor};
+        background: no-repeat url(${yellowBlob}) top 10% left 85vw, no-repeat url(${blueBlob}) bottom -20vh left -10% ${theme.colors.bgColor};
+        background-size: 50%;
         overflow-y: auto;
+
+        @media (max-width: ${theme.media.medium}) {
+            background: no-repeat url(${yellowBlob}) top -10% left 65vw, no-repeat url(${blueBlob}) bottom -25vh left -25vw ${theme.colors.bgColor};
+            background-size: 100%;
+        }
     }
 
     .container {

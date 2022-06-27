@@ -14,7 +14,7 @@ type Props = {
 }
 
 const AnswerButton = ({ index, answer, correctAnswer, selected, handleClick }: Props) => {
-    const { isFinish } = useContext(QuizContext);
+    const { status: { isFinish } } = useContext(QuizContext);
     const compareSelectedAndCurrent: boolean = selected?.selectedAnswer === answer;
     const compareSelectedAndCorrect: boolean = answer === correctAnswer;
 

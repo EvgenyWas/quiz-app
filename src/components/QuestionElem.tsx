@@ -55,6 +55,10 @@ const StyledAnswersContainer = styled.div`
     display: flex;
     gap: 12px;
     margin-bottom: 12px;
+
+    @media (max-width: ${theme.media.small}) {
+        flex-wrap: wrap;
+    }
 `
 
 const StyledLine = styled.div`

@@ -1,19 +1,20 @@
-import { ReactNode, useEffect, useState } from "react"
+import { ReactNode, useEffect, useReducer, useState } from "react";
 import { ApiService } from "../API/ApiService";
-import { TQuestionItem, TQuestionsParams, TSelectedAnswer, TSortQuestionItem } from "../types/types";
-import { QuizContext, quizContextDefault } from "./QuizContext"
+import { actionChangeIsFinish, actionChangeIsStart, actionPutSortQestionsArray } from "../Reducer/actions";
+import { paramsInitialState, questionsInitialState, quizStatusInitialState } from "../Reducer/initialStates";
+import { paramsReducer, questionsReducer, quizStatusReducer } from "../Reducer/reducers";
+import { TSelectedAnswer } from "../types/types";
+import { QuizContext } from "./QuizContext";
 
 type Props = { children: ReactNode };
 
 export const QuizContextProvider = ({ children }: Props) => {
     const [categories, setCategories] = useState([]);
-    const [params, setParams] = useState<TQuestionsParams>(quizContextDefault.params);
-    const [isStart, setIsStart] = useState<boolean>(false);
-    const [questionsArray, setQuestionsArray] = useState<TQuestionItem[]>([]);
-    const [sortQuestionsArray, setSortQuestionsArray] = useState<TSortQuestionItem[]>([])
     const [selectedAnswers, setSelectedAnswers] = useState<TSelectedAnswer[]>([]);
-    const [isFinish, setIsFinish] = useState<boolean>(false);
     const [score, setScore] = useState<number>(0);
+    const [status, dispatchStatus] = useReducer(quizStatusReducer, quizStatusInitialState);
+    const [params, dispatchParams] = useReducer(paramsReducer, paramsInitialState);
+    const [questions, dispatchQuestions] = useReducer(questionsReducer, questionsInitialState);
 
     async function fetchCategories() {
         const response = await ApiService.getCategories();
@@ -26,34 +27,32 @@ export const QuizContextProvider = ({ children }: Props) => {
     }, []);
 
     const handleFinishClick = () => {
-        if (isFinish) {
-            setSortQuestionsArray([]);
-            setIsFinish(false);
+        if (status.isFinish) {
+            dispatchQuestions(actionPutSortQestionsArray([]));
+            dispatchStatus(actionChangeIsFinish(false));
             setScore(0);
-            setIsStart(false);
+            dispatchStatus(actionChangeIsStart(false));
         } else {
-            sortQuestionsArray.forEach((correct) => {
+            questions.sortQuestionsArray.forEach((correct) => {
                 selectedAnswers.forEach((selected) => {
                     if (correct.correctAnswer === selected.selectedAnswer && correct.id === selected.id) {
                         setScore(prevScore => prevScore += 1)
                     }
                 })
             });
-            setIsFinish(true);
+            dispatchStatus(actionChangeIsFinish(true));
         }
     };
 
     return (
         <QuizContext.Provider value={{ 
             categories, 
-            params, setParams,
-            isStart, setIsStart,
-            questionsArray, setQuestionsArray, 
-            sortQuestionsArray, setSortQuestionsArray, 
+            params, dispatchParams,
+            status, dispatchStatus,
+            questions, dispatchQuestions, 
             selectedAnswers, setSelectedAnswers, 
-            isFinish,
             score,
-            handleFinishClick
+            handleFinishClick,
         }}>
             { children }
         </QuizContext.Provider>

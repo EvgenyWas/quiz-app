@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
-import { getFontsFragment } from '../../../utils/utils';
 import { theme } from "../../../styles/theme";
+import { getFontsFragment } from '../../../utils/utils';
 
 type Props = {
     startClick: () => void,

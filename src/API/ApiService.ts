@@ -29,7 +29,7 @@ export class ApiService {
 
             return response;
         } catch (error) {
-            throw new Error('Unable to get a token.');
+            throw new Error('The free API feels bad');
         }
     };
 };
