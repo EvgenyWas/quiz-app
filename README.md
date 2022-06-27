@@ -1,7 +1,7 @@
 # Quiz App
 The simple React App on TypeScript with using useContext and useReducer. I used some different React-libraries as Select, Spinners and Styled-components for stylization. Also I touched Buffer for decoding a data response from base64.
 
-[Watch demo](https://evgenywas.github.io/finance-logger/)
+[Watch demo](https://evgenywas.github.io/quiz-app/)
 
 > Start page preview
 
