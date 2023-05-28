@@ -16,4 +16,4 @@ The simple React App on TypeScript with using useContext and useReducer. I used 
 <img src="previews/preview-quiz-page-answers.jpg" height="350">
 
 ### Summary
-Brought [Bob Ziroll](https://github.com/bobziroll) design to life, trained basic hooks as useContext and useReducer and improved work with network requestests and promises.
+Brought [Bob Ziroll](https://github.com/bobziroll) design to life, trained basic hooks as useContext and useReducer and improved work with network requests and Promise.
